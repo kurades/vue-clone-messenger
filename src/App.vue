@@ -1,16 +1,16 @@
 <template>
   <v-app>
     <v-main>
-      <!-- <router-view /> -->
-      <home-view></home-view>
+      <router-view ></router-view>
+      
     </v-main>
   </v-app>
 </template>
 <script>
-import HomeView from '@/views/HomeView.vue'
+// import HomeView from '@/views/HomeView.vue'
 export default {
   components : {
-    HomeView,
+    // HomeView,
   }
 }
 </script>

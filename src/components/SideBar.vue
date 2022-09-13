@@ -2,10 +2,7 @@
   <v-container class="pa-0 full-height border">
     <v-row class="pa-5 d-flex justify-space-between align-center">
       <v-avatar>
-        <img
-          src="https://scontent.xx.fbcdn.net/v/t1.6435-1/91076463_933377397094541_869919563943247872_n.jpg?stp=dst-jpg_p100x100&_nc_cat=111&ccb=1-7&_nc_sid=7206a8&_nc_ohc=OmqmcTWoDMUAX9CMNdu&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.fhan3-3.fna&oh=00_AT9OJSAkwk7H9OvheexnlhGhFp1q0Dq0L4Ct7wovL0aieQ&oe=632F7755&_nc_fr=fhan3c03"
-          alt="alt"
-        />
+        <img :src="user?.picture" alt="alt" />
       </v-avatar>
 
       <span>Chat</span>
@@ -43,16 +40,15 @@
         overflow-x-hidden
       "
     >
-      <!-- <template v-if="!searchState === true"> -->
-        <user-item
-          v-show="!searchState"
-          v-for="item in profile?.friends"
-          :key="item.id"
-          :item="item"
-          class="pl-5"
-        >
-        </user-item>
-      <!-- </template> -->
+      <user-item
+        v-show="!searchState"
+        v-for="item in user?.contacts"
+        :key="item.id"
+        :item="item"
+        @changeItem="(data)=> item.lastChat = data"
+        class="pl-5"
+      >
+      </user-item>
       <template v-if="searchState">
         <search-item
           v-for="item in searchResult"
@@ -78,14 +74,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(["profile", "allFriends","chosen"]),
+    ...mapState(["user", "allFriends"]),
   },
   watch: {
     search() {
       if (this.search != "") {
         this.searchResult = this.allFriends?.filter((i) => {
-          // console.log(i.name.include('a'));
-          // console.log(typeof(i.name));
           return i.name.includes(this.search);
         });
       } else {
@@ -98,7 +92,7 @@ export default {
     SearchItem,
   },
   methods: {
-    ...mapActions(["getProfile", "getAllFriends", "getChosen", "getFriends"]),
+    ...mapActions(["getProfile", "getAllFriends", "getChosen","getConversations"]),
     toggleOnSearch: function () {
       this.searchState = true;
     },
@@ -108,11 +102,7 @@ export default {
     },
   },
   created() {
-    this.getProfile();
     this.getAllFriends();
-    this.getFriends().then(() => {
-      this.getChosen()
-    });
   },
 };
 </script>
