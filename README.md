@@ -6,7 +6,7 @@ npm install
 ```
 
 ### Pusher configuration
-```
+```javascript
 // go to /src/pusher/index.js
 const pusher = new Pusher("APP_KEY", {
   cluster: "APP_CLUSTER"
@@ -26,7 +26,7 @@ npm run serve
 ```
 
 ### Send message
-```
+```javascript
 // login with 'tuan anh' and 'tuan anh 1'
 //Example message
 {
